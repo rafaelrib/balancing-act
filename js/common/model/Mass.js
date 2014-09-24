@@ -45,6 +45,10 @@ define( function( require ) {
         animating: false
       } );
 
+    // Limit the verbosity of the phet event data.
+    this.positionProperty.setSendPhetEvents( false );
+    this.rotationAngleProperty.setSendPhetEvents( false );
+
     //------------------------------------------------------------------------
     // Externally used (i.e. public) attributes that don't need to be properties.
     //------------------------------------------------------------------------

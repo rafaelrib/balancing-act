@@ -54,9 +54,9 @@ define( function( require ) {
       } );
 
     // Externally visible observable lists.
-    thisPlank.massesOnSurface = new ObservableArray();
+    thisPlank.massesOnSurface = new ObservableArray().setID( 'massesOnPlankSurface' );
     thisPlank.forceVectors = new ObservableArray();
-    thisPlank.activeDropLocations = new ObservableArray(); // Locations where user-controlled masses would land if dropped, in meters from center.
+    thisPlank.activeDropLocations = new ObservableArray().setSendPhetEvents( false ); // Locations where user-controlled masses would land if dropped, in meters from center.
 
     // Other external visible attributes.
     thisPlank.pivotPoint = pivotPoint;
