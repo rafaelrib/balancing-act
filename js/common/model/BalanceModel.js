@@ -34,7 +34,7 @@ define( function( require ) {
     thisModel.fulcrum = new Fulcrum( new Dimension2( 1, FULCRUM_HEIGHT ) );
     thisModel.massList = new ObservableArray().setID( 'massesInModel' );
     thisModel.userControlledMasses = []; // Masses being controlled by user(s), potentially more than one in touch environment.
-    thisModel.columnStateProperty = new Property( 'doubleColumns' ); // Valid values are doubleColumns, singleColumn, noColumns.
+    thisModel.columnStateProperty = new Property( 'doubleColumns' ).setID( 'columnState' ); // Valid values are doubleColumns, singleColumn, noColumns.
     thisModel.plank = new Plank( new Vector2( 0, PLANK_HEIGHT ), new Vector2( 0, FULCRUM_HEIGHT ), this.columnStateProperty, this.userControlledMasses );
     thisModel.supportColumns = [
       new LevelSupportColumn( PLANK_HEIGHT, -1.625 ),

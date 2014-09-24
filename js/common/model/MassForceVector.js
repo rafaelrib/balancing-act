@@ -15,7 +15,7 @@ define( function( require ) {
    */
   function MassForceVector( mass ) {
     this.mass = mass;
-    this.forceVectorProperty = new Property( this.generateVector( mass ) );
+    this.forceVectorProperty = new Property( this.generateVector( mass ) ).setSendPhetEvents( false );
   }
 
   MassForceVector.prototype = {

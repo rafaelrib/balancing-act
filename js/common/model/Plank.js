@@ -14,6 +14,7 @@ define( function( require ) {
   var MassForceVector = require( 'BALANCING_ACT/common/model/MassForceVector' );
   var Matrix3 = require( 'DOT/Matrix3' );
   var ObservableArray = require( 'AXON/ObservableArray' );
+  var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -53,9 +54,16 @@ define( function( require ) {
         bottomCenterLocation: location
       } );
 
+    // Turn off events that make the data stream too verbose.
+    this.tiltAngleProperty.setSendPhetEvents( false );
+    this.bottomCenterLocationProperty.setSendPhetEvents( false );
+
+    // Add a property the tracks whether or not the plank is moving.  This was added specifically for data collection.
+    this.isMoving = new Property( false ).setID( 'plankIsMoving' );
+
     // Externally visible observable lists.
     thisPlank.massesOnSurface = new ObservableArray().setID( 'massesOnPlankSurface' );
-    thisPlank.forceVectors = new ObservableArray();
+    thisPlank.forceVectors = new ObservableArray().setSendPhetEvents( false );
     thisPlank.activeDropLocations = new ObservableArray().setSendPhetEvents( false ); // Locations where user-controlled masses would land if dropped, in meters from center.
 
     // Other external visible attributes.
@@ -164,6 +172,9 @@ define( function( require ) {
             thisPlank.activeDropLocations.add( dropLocation );
           }
         } );
+
+        // Update the moving state.
+        this.isMoving.value = !( this.angularVelocity === 0 );
       },
 
       // Add a mass to the surface of the plank, chooses a location below the mass.
