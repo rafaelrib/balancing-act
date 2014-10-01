@@ -46,6 +46,9 @@ define( function( require ) {
 
       } );
 
+    this.imageProperty.setSendPhetEvents( false );
+    this.heightProperty.setSendPhetEvents( false );
+
     // Flag that indicates whether this node should be represented by a
     // reversed version of the current image, must be set prior to image
     // updates.
