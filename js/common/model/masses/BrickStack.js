@@ -45,6 +45,9 @@ define( function( require ) {
 
     // Invoke superconstructor.
     Mass.call( this, numBricks * BRICK_MASS, initialPosition );
+
+    // Set ID
+    this.setID( 'brickStack' + numBricks + 'High' );
   }
 
   return inherit( Mass, BrickStack,
