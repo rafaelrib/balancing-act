@@ -174,7 +174,7 @@ define( function( require ) {
         } );
 
         // Update the moving state.
-        this.isMoving.value = !( this.angularVelocity === 0 );
+        this.isMoving.value = this.angularVelocity !== 0;
       },
 
       // Add a mass to the surface of the plank, chooses a location below the mass.
