@@ -55,6 +55,8 @@ define( function( require ) {
         elapsedTime: 0
       } );
 
+    this.elapsedTimeProperty.setSendPhetEvents( false );
+
     // Best times and scores.
     thisModel.bestTimes = [];
     thisModel.bestScores = [];
