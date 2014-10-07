@@ -73,10 +73,10 @@ define( function( require ) {
     thisModel.challengeList = null;
 
     // Fixed masses that sit on the plank and that the user must attempt to balance.
-    thisModel.fixedMasses = new ObservableArray();
+    thisModel.fixedMasses = new ObservableArray().setID( 'fixedMasses' );
 
     // Masses that the user moves on to the plank to counterbalance the fixed masses.
-    thisModel.movableMasses = new ObservableArray();
+    thisModel.movableMasses = new ObservableArray().setID( 'movableMasses' );
 
     // Masses that the user is (or users are) moving.
     thisModel.userControlledMasses = [];
