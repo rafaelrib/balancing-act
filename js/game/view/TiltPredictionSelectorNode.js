@@ -26,7 +26,7 @@ define( function( require ) {
 
     // Property that tracks the selected prediction.  Valid values are 'none',
     // 'tiltDownOnLeftSide', 'stayBalanced', and 'tiltDownOnRightSide'.
-    this.tiltPredictionProperty = new Property( 'none' );
+    this.tiltPredictionProperty = new Property( 'none' ).setID( 'tiltPrediction' );
 
     var panelContents = new HBox(
       { children: [
