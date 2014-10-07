@@ -38,21 +38,20 @@ define( function( require ) {
     var thisPlank = this;
     thisPlank.userControlledMasses = userControlledMasses;
 
-    PropertySet.call( this,
-      {
-        // Angle of the plank with respect to the ground.  A value of 0
-        // indicates a level plank, positive is tilted left, negative to the
-        // right.  In radians.
-        tiltAngle: 0,
+    PropertySet.call( this, {
+      // Angle of the plank with respect to the ground.  A value of 0
+      // indicates a level plank, positive is tilted left, negative to the
+      // right.  In radians.
+      tiltAngle: 0,
 
-        // Point where the bottom center of the plank is currently located.
-        // If the plank is sitting on top of the fulcrum, this point will be
-        // the same as the pivot point.  When the pivot point is above the
-        // plank, as is generally done in this simulation in order to make the
-        // plank rebalance if nothing is on it, this location will be
-        // different.
-        bottomCenterLocation: location
-      } );
+      // Point where the bottom center of the plank is currently located.
+      // If the plank is sitting on top of the fulcrum, this point will be
+      // the same as the pivot point.  When the pivot point is above the
+      // plank, as is generally done in this simulation in order to make the
+      // plank rebalance if nothing is on it, this location will be
+      // different.
+      bottomCenterLocation: location
+    } );
 
     // Turn off events that make the data stream too verbose.
     this.tiltAngleProperty.setSendPhetEvents( false );
@@ -65,6 +64,24 @@ define( function( require ) {
     thisPlank.massesOnSurface = new ObservableArray().setID( 'massesOnPlankSurface' );
     thisPlank.forceVectors = new ObservableArray().setSendPhetEvents( false );
     thisPlank.activeDropLocations = new ObservableArray().setSendPhetEvents( false ); // Locations where user-controlled masses would land if dropped, in meters from center.
+
+    // Trigger a data collection event on the addition of masses so that it is clear what got added where.
+    thisPlank.massesOnSurface.addItemAddedListener( function( newlyAddedMass ) {
+      var distanceFromCenter = thisPlank.getPlankSurfaceCenter().distance( newlyAddedMass.position ) * ( newlyAddedMass.position.x > thisPlank.getPlankSurfaceCenter().x ? 1 : -1 );
+      distanceFromCenter = Math.round( distanceFromCenter * 100 ) / 100; // round to two digits
+      window.phetEvents.trigger( 'massAddedToPlank', {
+        distanceFromCenter: distanceFromCenter
+      } )
+    } );
+
+    // Trigger a data collection event on the removal of masses so that it is clear what got added where.
+    thisPlank.massesOnSurface.addItemRemovedListener( function( newlyRemovedMass ) {
+      var distanceFromCenter = thisPlank.getPlankSurfaceCenter().distance( newlyRemovedMass.position ) * ( newlyRemovedMass.position.x > thisPlank.getPlankSurfaceCenter().x ? 1 : -1 );
+      distanceFromCenter = Math.round( distanceFromCenter * 100 ) / 100; // round to two digits
+      window.phetEvents.trigger( 'massRemovedFromPlank', {
+        distanceFromCenter: distanceFromCenter
+      } )
+    } );
 
     // Other external visible attributes.
     thisPlank.pivotPoint = pivotPoint;
