@@ -57,8 +57,14 @@ define( function( require ) {
     this.tiltAngleProperty.setSendPhetEvents( false );
     this.bottomCenterLocationProperty.setSendPhetEvents( false );
 
-    // Add a property the tracks whether or not the plank is moving.  This was added specifically for data collection.
+    // Add a property that tracks whether or not the plank is moving.  This was added specifically for data collection.
     this.isMoving = new Property( false ).setID( 'plankIsMoving' );
+
+    // Add a property that tracks torque on the plank due to masses.  This was added specifically for data collection.
+    this.torqueDueToMasses = new Property( 0 ).setID( 'torqueDueToMasses' );
+
+    // Add a property that tracks angular acceleration.  This was added specifically for data collection.
+    this.angularVelocityForDataCollection = new Property( 0 ).setID( 'angularVelocity' );
 
     // Externally visible observable lists.
     thisPlank.massesOnSurface = new ObservableArray().setID( 'massesOnPlankSurface' );
@@ -126,6 +132,7 @@ define( function( require ) {
         if ( !thisPlank.userControlled ) {
           var angularAcceleration;
           thisPlank.updateNetTorque();
+          thisPlank.torqueDueToMasses.value = this.getTorqueDueToMasses();
 
           // Update the angular acceleration and velocity.  There is some
           // thresholding here to prevent the plank from oscillating forever
@@ -151,6 +158,8 @@ define( function( require ) {
             newTiltAngle = 0;
           }
           thisPlank.tiltAngle = newTiltAngle;
+
+          thisPlank.angularVelocityForDataCollection.value = this.angularVelocity; // for data collection
 
           // Update the shape of the plank and the positions of the masses on
           // the surface, but only if the tilt angle has changed.
