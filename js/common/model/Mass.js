@@ -93,6 +93,11 @@ define( function( require ) {
         this.animationStartHeight = this.height;
       },
 
+      // Get a string indicating the mass, including units, with not spaces.  Created for data collection.
+      getMassString: function() {
+        return this.massValue.toString() + 'kg';
+      },
+
       step: function( dt ) {
         if ( this.animating ) {
           // Do a step of the linear animation towards the destination.

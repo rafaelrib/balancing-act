@@ -27,7 +27,7 @@ define( function( require ) {
    */
   function HumanMass( massValue, standingImage, standingHeight, sittingImage, sittingHeight, initialPosition, sittingCenterOfMassXOffset, isMystery ) {
     ImageMass.call( this, massValue, standingImage, standingHeight, initialPosition, isMystery );
-    this.setID( 'human' );
+    this.setID( 'human-' + this.getMassString() );
     var thisMass = this;
 
     // Monitor the 'onPlank' property and update the image as changes occur.

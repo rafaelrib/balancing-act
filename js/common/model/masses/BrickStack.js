@@ -47,7 +47,7 @@ define( function( require ) {
     Mass.call( this, numBricks * BRICK_MASS, initialPosition );
 
     // Set ID
-    this.setID( 'brickStack' + numBricks + 'High' );
+    this.setID( 'brickStack-' + this.getMassString() );
   }
 
   return inherit( Mass, BrickStack,
