@@ -375,6 +375,24 @@ define( function( require ) {
 
           this.showChallengeGraphics();
 
+          // Send a data collection event indicating the challenge type, along with some other info deemed useful by
+          // the UBC researchers.
+          var challengeType;
+          if ( this.model.getCurrentChallenge() instanceof BalanceMassesChallenge ) {
+            challengeType = 'BalanceMassesChallenge';
+          }
+          else if ( this.model.getCurrentChallenge() instanceof TiltPredictionChallenge ) {
+            challengeType = 'TiltPredictionChallenge';
+          }
+          else if ( this.model.getCurrentChallenge() instanceof MassDeductionChallenge ) {
+            challengeType = 'MassDeductionChallenge';
+          }
+          window.phetEvents.trigger( 'presentingChallenge', {
+            challengeType: challengeType,
+            level: this.model.level + 1, // Adjust the index to match what is seen on the game screen
+            challengeNumber: this.model.challengeIndex
+          } );
+
           break;
 
         case 'showingCorrectAnswerFeedback':
