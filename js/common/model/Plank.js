@@ -77,7 +77,7 @@ define( function( require ) {
       distanceFromCenter = Math.round( distanceFromCenter * 100 ) / 100; // round to two digits
       window.phetEvents.trigger( 'massAddedToPlank', {
         distanceFromCenter: distanceFromCenter
-      } )
+      } );
     } );
 
     // Trigger a data collection event on the removal of masses so that it is clear what got added where.
@@ -86,7 +86,7 @@ define( function( require ) {
       distanceFromCenter = Math.round( distanceFromCenter * 100 ) / 100; // round to two digits
       window.phetEvents.trigger( 'massRemovedFromPlank', {
         distanceFromCenter: distanceFromCenter
-      } )
+      } );
     } );
 
     // Other external visible attributes.
