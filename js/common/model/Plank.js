@@ -57,15 +57,6 @@ define( function( require ) {
     this.tiltAngleProperty.setSendPhetEvents( false );
     this.bottomCenterLocationProperty.setSendPhetEvents( false );
 
-    // Add a property that tracks whether or not the plank is moving.  This was added specifically for data collection.
-    this.isMoving = new Property( false ).setID( 'plankIsMoving' );
-
-    // Add a property that tracks torque on the plank due to masses.  This was added specifically for data collection.
-    this.torqueDueToMasses = new Property( 0 ).setID( 'torqueDueToMasses' );
-
-    // Add a property that tracks angular acceleration.  This was added specifically for data collection.
-    this.angularVelocityForDataCollection = new Property( 0 ).setID( 'angularVelocity' );
-
     // Externally visible observable lists.
     thisPlank.massesOnSurface = new ObservableArray().setID( 'massesOnPlankSurface' );
     thisPlank.forceVectors = new ObservableArray().setSendPhetEvents( false );
@@ -78,6 +69,7 @@ define( function( require ) {
       window.phetEvents.trigger( 'massAddedToPlank', {
         distanceFromCenter: distanceFromCenter
       } );
+      thisPlank.triggerAdditionalPlankStateInfo();
     } );
 
     // Trigger a data collection event on the removal of masses so that it is clear what got added where.
@@ -122,17 +114,29 @@ define( function( require ) {
         thisPlank.forceToLevelAndStill();
       }
     } );
+
+    // Add a property that tracks whether or not the plank is moving.  This was added specifically for data collection.
+    this.isMoving = new Property( false ).setID( 'plankIsMoving' );
+
+    // Trigger data collection events when the plank starts and stops moving.
+    this.isMoving.link( function( isMoving ) {
+      thisPlank.triggerAdditionalPlankStateInfo();
+    } );
+    this.zeroDtCount = 0;
   }
 
   // Inherit from base class and define the methods for this object.
   return inherit( PropertySet, Plank, {
 
       step: function( dt ) {
+        if ( dt === 0 ) {
+          // Workaround for an issue where 0 dt values were being received, generally on cursor changes.
+          return;
+        }
         var thisPlank = this;
         if ( !thisPlank.userControlled ) {
           var angularAcceleration;
           thisPlank.updateNetTorque();
-          thisPlank.torqueDueToMasses.value = this.getTorqueDueToMasses();
 
           // Update the angular acceleration and velocity.  There is some
           // thresholding here to prevent the plank from oscillating forever
@@ -158,8 +162,6 @@ define( function( require ) {
             newTiltAngle = 0;
           }
           thisPlank.tiltAngle = newTiltAngle;
-
-          thisPlank.angularVelocityForDataCollection.value = this.angularVelocity; // for data collection
 
           // Update the shape of the plank and the positions of the masses on
           // the surface, but only if the tilt angle has changed.
@@ -405,6 +407,7 @@ define( function( require ) {
         this.tiltAngle = angle;
         this.updatePlank();
         this.updateMassPositions();
+        this.triggerAdditionalPlankStateInfo();
       },
 
       isTickMarkOccupied: function( tickMark ) {
@@ -503,6 +506,14 @@ define( function( require ) {
         }
 
         return snapToLocations;
+      },
+
+      // Function for creating data collection events that indicate torque from masses and rotational angle.
+      triggerAdditionalPlankStateInfo: function() {
+        window.phetEvents.trigger( 'additionalPlankStateInfo', {
+          torqueDueToMasses: this.getTorqueDueToMasses(),
+          currentPlankAngle: this.tiltAngleProperty.value
+        } );
       }
     },
     {
