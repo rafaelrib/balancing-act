@@ -349,6 +349,11 @@ define( function( require ) {
       // the current state.
       this.hideAllGameNodes();
 
+      // Log a data collection message with the elapsed time.
+      window.phetEvents.trigger( 'gameStateChangeInfo', {
+        elapsedTime: this.model.elapsedTime
+      } );
+
       // Show the nodes appropriate to the state
       switch( gameState ) {
         case 'choosingLevel':
