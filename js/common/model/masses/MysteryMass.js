@@ -75,9 +75,8 @@ define( function( require ) {
   ];
 
   function MysteryMass( initialPosition, mysteryMassId ) {
-    LabeledImageMass.call( this, initialPosition, MYSTERY_MASS_CONFIGURATIONS[ mysteryMassId ] );
+    LabeledImageMass.call( this, initialPosition, MYSTERY_MASS_CONFIGURATIONS[ mysteryMassId ], {id: 'mysteryMass' + mysteryMassId + '-' + MYSTERY_MASS_CONFIGURATIONS[ mysteryMassId ].massValue } );
     this.mysteryMassId = mysteryMassId;
-    this.setID( 'mysteryMass' + mysteryMassId + '-' + this.getMassString() );
   }
 
   return inherit( LabeledImageMass, MysteryMass, {

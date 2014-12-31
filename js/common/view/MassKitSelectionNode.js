@@ -135,7 +135,7 @@ define( function( require ) {
       } );
 
     // Create the actual kit selection node.
-    this.selectedKit = new Property( 0 ).setID( 'massCarousel' );
+    this.selectedKit = new Property( 0, {id: 'massCarousel'} );
     KitSelectionNode.call( this, this.selectedKit,
       [
         {

@@ -58,7 +58,7 @@ define( function( require ) {
     this.bottomCenterLocationProperty.setSendPhetEvents( false );
 
     // Externally visible observable lists.
-    thisPlank.massesOnSurface = new ObservableArray().setID( 'massesOnPlankSurface' );
+    thisPlank.massesOnSurface = new ObservableArray( {id: 'massesOnPlankSurface'} );
     thisPlank.forceVectors = new ObservableArray().setSendPhetEvents( false );
     thisPlank.activeDropLocations = new ObservableArray().setSendPhetEvents( false ); // Locations where user-controlled masses would land if dropped, in meters from center.
 
@@ -116,7 +116,7 @@ define( function( require ) {
     } );
 
     // Add a property that tracks whether or not the plank is moving.  This was added specifically for data collection.
-    this.isMoving = new Property( false ).setID( 'plankIsMoving' );
+    this.isMoving = new Property( false, {id: 'plankIsMoving'} );
 
     // Trigger data collection events when the plank starts and stops moving.
     this.isMoving.link( function( isMoving ) {

@@ -26,8 +26,7 @@ define( function( require ) {
    * @constructor
    */
   function HumanMass( massValue, standingImage, standingHeight, sittingImage, sittingHeight, initialPosition, sittingCenterOfMassXOffset, isMystery ) {
-    ImageMass.call( this, massValue, standingImage, standingHeight, initialPosition, isMystery );
-    this.setID( 'human-' + this.getMassString() );
+    ImageMass.call( this, massValue, standingImage, standingHeight, initialPosition, isMystery, {id: 'human-' + massValue + 'kg'} );
     var thisMass = this;
 
     // Monitor the 'onPlank' property and update the image as changes occur.

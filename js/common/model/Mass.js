@@ -17,7 +17,7 @@ define( function( require ) {
   var MIN_ANIMATION_VELOCITY = 3; // In meters/sec.
   var MAX_REMOVAL_ANIMATION_DURATION = 0.75; // In seconds.
 
-  function Mass( massValue, initialPosition, isMystery ) {
+  function Mass( massValue, initialPosition, isMystery, id ) {
     var thisMass = this;
     PropertySet.call( this,
       {
@@ -43,7 +43,8 @@ define( function( require ) {
         // animating.  At the time of this writing, the only animation supported
         // is a simple linear motion to a preset point.
         animating: false
-      } );
+      },
+      {id: id} );
 
     // Limit the verbosity of the phet event data.
     this.positionProperty.setSendPhetEvents( false );

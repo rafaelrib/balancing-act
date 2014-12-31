@@ -43,11 +43,10 @@ define( function( require ) {
         // height and the the aspect ratio of the image that represents it.  A
         // property is used because the size may change during animations.
         height: height
-      } );
+      }, {id: 'imageMass-' + this.getMassString()} );
 
     this.imageProperty.setSendPhetEvents( false );
     this.heightProperty.setSendPhetEvents( false );
-    this.setID( 'imageMass-' + this.getMassString() );
 
     // Flag that indicates whether this node should be represented by a
     // reversed version of the current image, must be set prior to image
