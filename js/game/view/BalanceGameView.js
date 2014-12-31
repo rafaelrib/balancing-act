@@ -350,7 +350,7 @@ define( function( require ) {
       this.hideAllGameNodes();
 
       // Log a data collection message with the elapsed time.
-      window.phetEvents.trigger( 'gameStateChangeInfo', {
+      window.phet.arch.trigger( 'gameStateChangeInfo', {
         elapsedTime: this.model.elapsedTime
       } );
 
@@ -392,7 +392,7 @@ define( function( require ) {
           else if ( this.model.getCurrentChallenge() instanceof MassDeductionChallenge ) {
             challengeType = 'MassDeductionChallenge';
           }
-          window.phetEvents.trigger( 'presentingChallenge', {
+          window.phet.arch.trigger( 'presentingChallenge', {
             challengeType: challengeType,
             level: this.model.level + 1, // Adjust the index to match what is seen on the game screen
             challengeNumber: this.model.challengeIndex

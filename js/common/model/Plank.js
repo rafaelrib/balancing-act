@@ -66,7 +66,7 @@ define( function( require ) {
     thisPlank.massesOnSurface.addItemAddedListener( function( newlyAddedMass ) {
       var distanceFromCenter = thisPlank.getPlankSurfaceCenter().distance( newlyAddedMass.position ) * ( newlyAddedMass.position.x > thisPlank.getPlankSurfaceCenter().x ? 1 : -1 );
       distanceFromCenter = Math.round( distanceFromCenter * 100 ) / 100; // round to two digits
-      window.phetEvents.trigger( 'massAddedToPlank', {
+      window.phet.arch.trigger( 'massAddedToPlank', {
         distanceFromCenter: distanceFromCenter
       } );
       thisPlank.triggerAdditionalPlankStateInfo();
@@ -76,7 +76,7 @@ define( function( require ) {
     thisPlank.massesOnSurface.addItemRemovedListener( function( newlyRemovedMass ) {
       var distanceFromCenter = thisPlank.getPlankSurfaceCenter().distance( newlyRemovedMass.position ) * ( newlyRemovedMass.position.x > thisPlank.getPlankSurfaceCenter().x ? 1 : -1 );
       distanceFromCenter = Math.round( distanceFromCenter * 100 ) / 100; // round to two digits
-      window.phetEvents.trigger( 'massRemovedFromPlank', {
+      window.phet.arch.trigger( 'massRemovedFromPlank', {
         distanceFromCenter: distanceFromCenter
       } );
     } );
@@ -510,7 +510,7 @@ define( function( require ) {
 
       // Function for creating data collection events that indicate torque from masses and rotational angle.
       triggerAdditionalPlankStateInfo: function() {
-        window.phetEvents.trigger( 'additionalPlankStateInfo', {
+        window.phet.arch.trigger( 'additionalPlankStateInfo', {
           torqueDueToMasses: this.getTorqueDueToMasses(),
           currentPlankAngle: this.tiltAngleProperty.value
         } );
